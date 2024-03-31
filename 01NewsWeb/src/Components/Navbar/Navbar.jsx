@@ -19,7 +19,7 @@ function classNames(...classes) {
 export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
   const [activeCategory, setActiveCategory] = useState('GENERAL');
   const [searchText, setSearchText] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('us'); // Initialize selectedCountry state
+  const [selectedCountry, setSelectedCountry] = useState('in'); // Initialize selectedCountry state
 
   const handleCategoryClick = (name) => {
     setActiveCategory(name);
@@ -70,18 +70,6 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-end">
-              <select
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                className="px-3 py-1 ml-2 rounded-md border border-gray-300 focus:outline-none focus:border-black focus:ring-500"
-              >
-                <option value="us">United States</option>
-                <option value="gb">United Kingdom</option>
-                <option value="in">India</option>
-                {/* Add more countries as needed */}
-              </select>
-            </div>
             {/* Search Bar */}
             <div className="flex items-center justify-end">
               <input
@@ -100,7 +88,22 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
               </button>
             </div>
             {/* Country Select */}
-            
+            <div className="flex items-center justify-end">
+              <select
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="px-3 py-1 ml-2 rounded-md border border-gray-300 focus:outline-none focus:border-black focus:ring-500"
+              >
+                <option value="in">India</option>
+                <option value="us">United States</option>
+                <option value="gb">United Kingdom</option>
+                <option value="au">Australia</option>
+                <option value="nz">New Zealand</option>
+                <option value="ca">Canada</option>
+                <option value="za">South Africa</option>
+                <option value="tr">Turkey</option>
+              </select>
+            </div>
           </div>
         </div>
       </Disclosure>
