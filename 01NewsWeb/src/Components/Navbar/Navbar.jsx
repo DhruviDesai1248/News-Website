@@ -46,11 +46,11 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
   return (
     <div>
       <Disclosure as="nav" className="bg-red-800">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-11xl px-2 sm:px-4 lg:px-4">
           <div className="relative flex h-16 items-center justify-between">
             {/* Navigation */}
             <div className="flex flex-1 items-center justify-start">
-              <div className="hidden sm:ml-6 sm:block">
+              <div className="hidden sm:ml-2 sm:block">
                 <div className="flex space-x-4">
                   {navigation.map((item, index) => (
                     <a
@@ -58,7 +58,7 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
                       href={item.href}
                       className={classNames(
                         item.name === activeCategory ? 'bg-black text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'rounded-md px-6 py-2 text-sm font-medium'
+                        'rounded-md px-4 py-2 text-sm font-medium'
                       )}
                       onClick={() => handleCategoryClick(item.name)}
                       aria-current={item.current ? 'page' : undefined}
@@ -69,6 +69,18 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
                   ))}
                 </div>
               </div>
+            </div>
+            <div className="flex items-center justify-end">
+              <select
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="px-3 py-1 ml-2 rounded-md border border-gray-300 focus:outline-none focus:border-black focus:ring-500"
+              >
+                <option value="us">United States</option>
+                <option value="gb">United Kingdom</option>
+                <option value="in">India</option>
+                {/* Add more countries as needed */}
+              </select>
             </div>
             {/* Search Bar */}
             <div className="flex items-center justify-end">
@@ -88,18 +100,7 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
               </button>
             </div>
             {/* Country Select */}
-            <div className="flex items-center justify-end">
-              <select
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                className="px-3 py-1 ml-2 rounded-md border border-gray-300 focus:outline-none focus:border-black focus:ring-500"
-              >
-                <option value="us">United States</option>
-                <option value="gb">United Kingdom</option>
-                <option value="in">India</option>
-                {/* Add more countries as needed */}
-              </select>
-            </div>
+            
           </div>
         </div>
       </Disclosure>
