@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MdLocationOn, MdOutlinePersonOutline } from "react-icons/md";
 import { WiDayCloudy } from "react-icons/wi";
 import { BiCalendar } from "react-icons/bi";
@@ -11,6 +11,7 @@ import { MdRssFeed } from "react-icons/md";
 import { FaYoutube } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import LoginForm from "../LoginForm";
 
 function NavbarTop() {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
@@ -20,6 +21,7 @@ function NavbarTop() {
   const [currentDate, setCurrentDate] = useState("");
   const [currentWeather, setCurrentWeather] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
+  const [showLoginForm, setShowLoginForm] = useState(false);
 
   const languages = [
     "English",
@@ -68,7 +70,12 @@ function NavbarTop() {
 
   const updateCurrentDate = () => {
     const today = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     setCurrentDate(today.toLocaleDateString(undefined, options));
   };
 
@@ -76,19 +83,25 @@ function NavbarTop() {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     // Replace 'YOUR_API_KEY' with your OpenWeatherMap API key
-    const apiKey = 'b045109e10035649ab293fd9d853edb8';
+    const apiKey = "b045109e10035649ab293fd9d853edb8";
     // Fetch weather data from OpenWeatherMap API using latitude and longitude
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`)
-      .then(response => response.json())
-      .then(data => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         setCurrentWeather(data.main.temp);
         setCurrentLocation(data.name);
       })
-      .catch(error => {
-        console.error('Error fetching weather data:', error);
+      .catch((error) => {
+        console.error("Error fetching weather data:", error);
       });
   };
 
+  // Function to toggle LoginForm visibility
+  const toggleLoginForm = () => {
+    setShowLoginForm(!showLoginForm);
+  };
 
   return (
     <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8 bg-black text-gray-400 font-normal text-sm break-words font-sans box-border">
@@ -120,11 +133,15 @@ function NavbarTop() {
               </button>
             </div>
           ) : (
-            <div className="flex items-center px-2 cursor-pointer hover:text-white">
+            <div
+              className="flex items-center px-2 cursor-pointer hover:text-white"
+              onClick={toggleLoginForm}
+            >
               <MdOutlinePersonOutline style={{ fontSize: "18px" }} />
               <span>Login/Register</span>
             </div>
           )}
+          {showLoginForm && <LoginForm onClose={toggleLoginForm} />}
           {loggedIn ? null : (
             <GoogleLogin
               clientId="332547602429-7hfpi0a4oq1u0klj61ivn9l3vjb7qoa0.apps.googleusercontent.com"
@@ -134,7 +151,7 @@ function NavbarTop() {
               }}
             />
           )}
-          
+
           <div className="relative">
             <div
               className="flex items-center px-2 cursor-pointer hover:text-white"
