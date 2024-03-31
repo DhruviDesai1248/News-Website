@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
 
-function NewsBoard({ category, searchQuery }) {
+function NewsBoard({ category, searchQuery, selectedCountry }) {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function NewsBoard({ category, searchQuery }) {
           url = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${apiKey}`;
         } else {
           const apiKey = import.meta.env.VITE_API_KEY;
-          url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${apiKey}`;
+          url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&category=${category}&apiKey=${apiKey}`;
         }
         const response = await fetch(url);
         const data = await response.json();
@@ -24,7 +24,7 @@ function NewsBoard({ category, searchQuery }) {
     };
 
     fetchNews();
-  }, [category, searchQuery]);
+  }, [category, searchQuery, selectedCountry]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

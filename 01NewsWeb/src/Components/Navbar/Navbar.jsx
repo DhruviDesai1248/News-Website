@@ -1,5 +1,6 @@
 import { Disclosure } from '@headlessui/react';
 import { useState } from 'react';
+import NewsBoard from '../NewsBoard'; // Import NewsBoard component
 
 const navigation = [
   { name: 'GENERAL', href: '#', current: true },
@@ -18,6 +19,7 @@ function classNames(...classes) {
 export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
   const [activeCategory, setActiveCategory] = useState('GENERAL');
   const [searchText, setSearchText] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('us'); // Initialize selectedCountry state
 
   const handleCategoryClick = (name) => {
     setActiveCategory(name);
@@ -27,7 +29,7 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
   const handleSearch = async () => {
     setSearchQuery(searchText);
     try {
-      const url = `https://newsapi.org/v2/everything?q=${searchText}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
+      const url = `https://newsapi.org/v2/everything?q=${searchText}&apiKey=${import.meta.env.REACT_APP_NEWS_API_KEY}`;
       const response = await fetch(url);
       const data = await response.json();
       setArticles(data.articles);
@@ -36,9 +38,14 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
     }
   };
 
+  const handleCountryChange = (event) => {
+    const selectedCountry = event.target.value;
+    setSelectedCountry(selectedCountry);
+  };
+
   return (
-    <Disclosure as="nav" className="bg-red-800">
-      {({ open }) => (
+    <div>
+      <Disclosure as="nav" className="bg-red-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             {/* Navigation */}
@@ -80,9 +87,28 @@ export default function Navbar({ setCategory, setSearchQuery, setArticles }) {
                 Search
               </button>
             </div>
+            {/* Country Select */}
+            <div className="flex items-center justify-end">
+              <select
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                className="px-3 py-1 ml-2 rounded-md border border-gray-300 focus:outline-none focus:border-black focus:ring-500"
+              >
+                <option value="us">United States</option>
+                <option value="gb">United Kingdom</option>
+                <option value="in">India</option>
+                {/* Add more countries as needed */}
+              </select>
+            </div>
           </div>
         </div>
-      )}
-    </Disclosure>
+      </Disclosure>
+      {/* Render NewsBoard component */}
+      <NewsBoard
+        category={activeCategory}
+        searchQuery={searchText}
+        selectedCountry={selectedCountry} // Pass selectedCountry to NewsBoard
+      />
+    </div>
   );
 }
