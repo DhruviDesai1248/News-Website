@@ -138,7 +138,7 @@ function NavbarTop() {
               onClick={toggleLoginForm}
             >
               <MdOutlinePersonOutline style={{ fontSize: "18px" }} />
-              <span>Login/Register</span>
+              <span>{loggedIn ? user.name : "Login/Register"}</span>
             </div>
           )}
           {showLoginForm && <LoginForm onClose={toggleLoginForm} />}
