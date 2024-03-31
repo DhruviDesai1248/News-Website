@@ -9,7 +9,7 @@ function NewsBoard({ category, searchQuery, selectedCountry }) {
       try {
         let url = '';
         if (searchQuery) {
-          const apiKey = 'fe3c74d8a5c44644bcb6e0a71ec3cf10';
+          const apiKey = '810e92029bdf44cca8f4a58e4f5b6b4c';
           url = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${apiKey}`;
         } else {
           const apiKey = import.meta.env.VITE_API_KEY;
@@ -17,7 +17,7 @@ function NewsBoard({ category, searchQuery, selectedCountry }) {
         }
         const response = await fetch(url);
         const data = await response.json();
-        setArticles(data.articles);
+        setArticles(data.articles || []); // Ensure data.articles is initialized or use an empty array
       } catch (error) {
         console.error('Error fetching news data:', error);
       }
