@@ -46,7 +46,7 @@ function LoginForm({ onClose }) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <div className="flex justify-between">
-          <button onClick={handleLogin} className="w-1/2 px-6 py-3 bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+          <button onClick={handleLogin} className="w-1/2 px-6 py-3 bg-red-800 text-white rounded-md mr-2 hover:bg-black focus:outline-none focus:bg-blue-600">
             Login
           </button>
           <button onClick={handleRegister} className="w-1/2 px-6 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
